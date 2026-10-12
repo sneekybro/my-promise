@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff0f3">
+<title>A Little Something for You ❤️</title>
+<style>
+  :root { --pink:#f5a6b8; --deep:#b84e68; --paper:#fffaf0; --ink:#49363a; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; overflow-x:hidden; color:var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    background: radial-gradient(circle at top, #fff9fa 0, #ffe8ee 45%, #f9d4df 100%);
+  }
+  button { font:inherit; cursor:pointer; }
+  .hearts { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+  .float-heart { position:absolute; bottom:-40px; color:#e98ca2; opacity:.65; animation: rise linear forwards; }
+  @keyframes rise { to { transform:translateY(-115vh) rotate(25deg); opacity:0; } }
+  main { position:relative; z-index:1; width:min(680px, 92vw); margin:0 auto; padding:30px 0 50px; }
+  .screen { display:none; text-align:center; animation: appear .65s ease both; }
+  .screen.active { display:block; }
+  @keyframes appear { from { opacity:0; transform:translateY(12px) scale(.98); } to {opacity:1; transform:none;} }
+  .eyebrow { text-transform:uppercase; letter-spacing:3px; font: .75rem Arial,sans-serif; color:#a55d70; }
+  h1 { font-size:clamp(2rem,8vw,3.5rem); line-height:1.08; margin:12px 0; color:#9f435d; }
+  p { line-height:1.65; }
+  .sub { max-width:430px; margin:12px auto 25px; font-size:1.05rem; }
+  .primary, .secondary {
+    border:0; border-radius:999px; padding:13px 22px; margin:7px;
+    transition:transform .2s, box-shadow .2s;
+  }
+  .primary { background:#bd526d; color:white; box-shadow:0 7px 18px #b84e6830; }
+  .secondary { background:#fff; color:#9f435d; border:1px solid #f0bdc9; }
+  .primary:hover, .secondary:hover { transform:translateY(-2px); box-shadow:0 8px 18px #b84e6828; }
+  .envelope-wrap { margin:28px auto 22px; width:210px; height:150px; position:relative; }
+  .envelope { position:absolute; inset:22px 0 0; height:125px; background:#e8a2b1; border-radius:8px; box-shadow:0 12px 25px #8c405126; }
+  .envelope:before { content:""; position:absolute; inset:0; background:#f4c2cd; clip-path:polygon(0 0,50% 58%,100% 0); border-radius:8px 8px 0 0; }
+  .letter-peek { position:absolute; width:155px; height:88px; left:27px; top:0; background:#fffaf0; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:2rem; box-shadow:0 3px 8px #00000010; }
+  .seal { position:absolute; z-index:2; left:83px; top:65px; width:44px; height:44px; border-radius:50%; background:#b84e68; color:#fff; display:grid; place-items:center; font-size:1.25rem; box-shadow:0 2px 5px #0002; }
+  .paper { background:var(--paper); border:1px solid #eadbc9; box-shadow:0 14px 35px #783c4c20; border-radius:5px; padding:clamp(20px,5vw,38px); text-align:left; position:relative; }
+  .paper:before { content:""; position:absolute; inset:8px; border:1px solid #f1d8d9; pointer-events:none; }
+  .paper h2 { color:#a44861; font-size:2rem; margin:0 0 18px; position:relative; }
+  .paper p { font-size:1rem; position:relative; margin:0 0 15px; }
+  .highlight { background:linear-gradient(transparent 58%, #f8c4cf 58%); }
+  .signature { text-align:right; color:#a44861; font-style:italic; font-size:1.2rem; margin-top:25px; }
+  .little-note { display:inline-block; padding:12px 18px; background:#fff9; border-radius:16px; margin:12px 0; }
+  .choice-row { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:20px 0; }
+  .choice { border:1px solid #eab4c1; background:#fff8fa; color:#8e4055; border-radius:14px; padding:12px 14px; }
+  .choice.selected { background:#bd526d; color:white; }
+  .hidden-message { display:none; background:#fffaf0; border-radius:15px; padding:18px; margin:18px auto; max-width:420px; box-shadow:0 8px 22px #8b42551c; }
+  .hidden-message.show { display:block; animation:appear .45s ease both; }
+  .tiny { font: .82rem Arial,sans-serif; color:#986b75; }
+  footer { text-align:center; margin-top:24px; font-size:.85rem; color:#9f6876; }
+  @media (max-width:420px) { .paper p {font-size:.96rem;} main {padding-top:20px;} }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after {animation-duration:.01ms!important; transition:none!important;} }
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+<main>
+  <section class="screen active" id="welcome">
+    <div class="eyebrow">A tiny surprise, made just for you</div>
+    <div class="envelope-wrap" aria-hidden="true">
+      <div class="letter-peek">💌</div><div class="envelope"></div><div class="seal">♥</div>
+    </div>
+    <h1>Hey, my love ❤️</h1>
+    <p class="sub">I made a little something for you. It's not fancy, but every word comes from my heart.</p>
+    <button class="primary" onclick="go('question')">Open your surprise 💗</button>
+    <p class="tiny">P.S. There are a few hearts hidden along the way.</p>
+  </section>
+
+  <section class="screen" id="question">
+    <div class="eyebrow">Before the letter...</div>
+    <h1>One tiny question 🥹</h1>
+    <p class="sub">Do you know how special you are to me?</p>
+    <div class="choice-row">
+      <button class="choice" onclick="answer(this)">Maybe a little 🤍</button>
+      <button class="choice" onclick="answer(this)">I hope so 🥺</button>
+      <button class="choice" onclick="answer(this)">Tell me! 💌</button>
+    </div>
+    <div class="hidden-message" id="answerBox">More than these little words can explain. ❤️<br><button class="primary" onclick="go('letter')">Read my letter 💌</button></div>
+  </section>
+
+  <section class="screen" id="letter">
+    <div class="eyebrow">From my heart to yours</div>
+    <article class="paper">
+      <h2>My love, <span style="color:#d56d83">♥</span></h2>
+      <p>I want to promise you that I will always be on your side, no matter what happens. No matter how many people stand against us or how difficult life gets, I will still love you. Even if the whole world tells me not to, <span class="highlight">I will always choose you.</span></p>
+      <p>Even if you get upset with me or feel distant sometimes, my feelings won't just disappear. If it's not you, then it's no one for me. The only reasons I would step away are if you truly don't want me in your life anymore or if you cheat on me. Even then, I won't pretend that my love meant nothing.</p>
+      <p>I know you have mood swings, and I try to understand them. I notice the little changes in the way you reply and talk. Even when your replies are shorter or your tone feels different, I still care about you. You don't have to be perfect with me. <span class="highlight">You can always be yourself.</span></p>
+      <p>Even though my relatives tell me to leave you because of caste differences and the stereotypes they have about the Philippines, I will never stop loving you because of those things. I love you for who you are, not your caste, your nationality, or what anyone says about you.</p>
+      <p>I want us to face things together. I will keep trying, understanding, and communicating with you. I can't promise every day will be perfect, but I can promise to treat you with love and respect. You don't have to face the world alone as long as we both keep choosing each other.</p>
+      <p><span class="highlight">If it's not you, it's no one for me.</span> You have my heart, and I will keep choosing you for as long as we both want this love. I love you, my girl. Today, tomorrow, and through the difficult days too. ❤️</p>
+      <div class="signature">Always yours, with love ♡</div>
+    </article>
+    <button class="primary" onclick="go('last')">One last thing... 💗</button>
+  </section>
+
+  <section class="screen" id="last">
+    <div style="font-size:3.2rem; margin-top:24px">💗🫶🏻💗</div>
+    <h1>It's you. Still you.</h1>
+    <p class="sub">Different places, different backgrounds, other people's opinions — none of that changes the person I care about.</p>
+    <div class="little-note">You matter to me more than you know. ❤️</div>
+    <p>Whenever you need a reminder, come back to this little page.</p>
+    <button class="primary" onclick="burst()">Send you a thousand hearts 💕</button>
+    <button class="secondary" onclick="go('welcome')">Read it again ↺</button>
+    <div id="burstText" class="hidden-message">One for every time I wish I could make you smile. 💖</div>
+  </section>
+  <footer>Made with love, just for you ♡</footer>
+</main>
+<script>
+  function go(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    if (id === 'question') document.getElementById('answerBox').classList.remove('show');
+  }
+  function answer(btn) {
+    document.querySelectorAll('.choice').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById('answerBox').classList.add('show');
+  }
+  function makeHeart() {
+    const el = document.createElement('span');
+    el.className = 'float-heart';
+    el.textContent = ['♥','♡','❤','💕'][Math.floor(Math.random()*4)];
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.fontSize = (14 + Math.random()*22) + 'px';
+    el.style.animationDuration = (6 + Math.random()*7) + 's';
+    document.getElementById('hearts').appendChild(el);
+    setTimeout(() => el.remove(), 14000);
+  }
+  for(let i=0;i<12;i++) setTimeout(makeHeart, i*350);
+  setInterval(makeHeart, 850);
+  function burst() {
+    for(let i=0;i<28;i++) setTimeout(makeHeart, i*65);
+    document.getElementById('burstText').classList.add('show');
+  }
+</script>
+</body>
+</html>
